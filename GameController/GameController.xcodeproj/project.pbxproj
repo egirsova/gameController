@@ -14,6 +14,8 @@
 		9E230EDE1BB07C260046CC4E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9E230EDC1BB07C260046CC4E /* LaunchScreen.storyboard */; };
 		9E230EE91BB07C260046CC4E /* GameControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E230EE81BB07C260046CC4E /* GameControllerTests.swift */; };
 		9E230EF41BB07C270046CC4E /* GameControllerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E230EF31BB07C270046CC4E /* GameControllerUITests.swift */; };
+		9E230F3F1BB084080046CC4E /* ServiceBrowser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E230F3E1BB084080046CC4E /* ServiceBrowser.swift */; settings = {ASSET_TAGS = (); }; };
+		9E8D12EB1BB1C2270016AC74 /* ControlsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8D12EA1BB1C2270016AC74 /* ControlsViewController.swift */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +49,8 @@
 		9E230EEF1BB07C270046CC4E /* GameControllerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GameControllerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E230EF31BB07C270046CC4E /* GameControllerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameControllerUITests.swift; sourceTree = "<group>"; };
 		9E230EF51BB07C270046CC4E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9E230F3E1BB084080046CC4E /* ServiceBrowser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceBrowser.swift; sourceTree = "<group>"; };
+		9E8D12EA1BB1C2270016AC74 /* ControlsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ControlsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,7 +102,9 @@
 			isa = PBXGroup;
 			children = (
 				9E230ED31BB07C260046CC4E /* AppDelegate.swift */,
+				9E230F3E1BB084080046CC4E /* ServiceBrowser.swift */,
 				9E230ED51BB07C260046CC4E /* ViewController.swift */,
+				9E8D12EA1BB1C2270016AC74 /* ControlsViewController.swift */,
 				9E230ED71BB07C260046CC4E /* Main.storyboard */,
 				9E230EDA1BB07C260046CC4E /* Assets.xcassets */,
 				9E230EDC1BB07C260046CC4E /* LaunchScreen.storyboard */,
@@ -260,6 +266,8 @@
 			files = (
 				9E230ED61BB07C260046CC4E /* ViewController.swift in Sources */,
 				9E230ED41BB07C260046CC4E /* AppDelegate.swift in Sources */,
+				9E8D12EB1BB1C2270016AC74 /* ControlsViewController.swift in Sources */,
+				9E230F3F1BB084080046CC4E /* ServiceBrowser.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -405,6 +413,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.girsova.GameController;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -416,6 +425,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.girsova.GameController;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -486,6 +496,7 @@
 				9E230EFA1BB07C270046CC4E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		9E230EFB1BB07C270046CC4E /* Build configuration list for PBXNativeTarget "GameControllerTests" */ = {
 			isa = XCConfigurationList;
@@ -494,6 +505,7 @@
 				9E230EFD1BB07C270046CC4E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		9E230EFE1BB07C270046CC4E /* Build configuration list for PBXNativeTarget "GameControllerUITests" */ = {
 			isa = XCConfigurationList;
@@ -502,6 +514,7 @@
 				9E230F001BB07C270046CC4E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
