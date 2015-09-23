@@ -15,9 +15,15 @@ class ServiceBrowser : NSObject {
     
     private let gameServiceType = "elg-escape-game"
     private let peerId = MCPeerID(displayName: UIDevice.currentDevice().name)
+    var connectedPeerId: MCPeerID?
     
     let codeEnteredNotificationKey = "elg_codeEntered"
     let updateConnectionNotificationKey = "elg_connectionUpdate"
+    let sendKeystrokesNotificationKey = "elg_sendKeystrokes"
+    let kMovementTrackpad = 0
+    let kCameraTrackpad = 1
+    let kTapGesture = 0
+    let kLongPressGesture = 1
     
     
     var currentBrowser: MCNearbyServiceBrowser?
@@ -87,6 +93,12 @@ extension ServiceBrowser : MCSessionDelegate {
         print("peer \(peerID) didChangeState: \(state.stringValue())")
         
         NSNotificationCenter.defaultCenter().postNotificationName(updateConnectionNotificationKey, object: self, userInfo: ["sessionStatus": state.stringValue()])
+        
+        if state.stringValue() == "Connected"{
+            // We are now able to send data to the game app
+            connectedPeerId = peerID
+            NSNotificationCenter.defaultCenter().addObserver(self, selector: "sendKeystrokes:", name: sendKeystrokesNotificationKey, object: nil)
+        }
     }
     
     func session(session: MCSession, didStartReceivingResourceWithName resourceName: String, fromPeer peerID: MCPeerID, withProgress progress: NSProgress) {
@@ -103,5 +115,32 @@ extension ServiceBrowser : MCSessionDelegate {
     
     func session(session: MCSession, didReceiveStream stream: NSInputStream, withName streamName: String, fromPeer peerID: MCPeerID) {
         print("peer \(peerID) didReceiveStream, with name: \(streamName)")
+    }
+    
+    func sendKeystrokes(notification: NSNotification) {
+        print("Going to send keystrokes to game app")
+        let userInfo:Dictionary<String,Int!> = notification.userInfo as! Dictionary<String,Int!>
+        let trackpad = userInfo["trackpad"]
+        let gesture = userInfo["gesture"]
+        var sendStrokes: String?
+        if trackpad == kMovementTrackpad {
+            if gesture == kTapGesture {
+                sendStrokes = "Movement trackpad trapped"
+            } else {
+                sendStrokes = "Movement trackpad long press"
+            }
+        } else {
+            if gesture == kTapGesture {
+                sendStrokes = "Camera trackpad tapped"
+            } else {
+                sendStrokes = "Camera trackpad long press"
+            }
+        }
+        let sendData = sendStrokes?.dataUsingEncoding(NSUTF8StringEncoding)
+        do {
+        try session.sendData(sendData!, toPeers: [self.connectedPeerId!], withMode: MCSessionSendDataMode.Reliable)
+        } catch {
+            print("Error: Could not send data")
+        }
     }
 }
