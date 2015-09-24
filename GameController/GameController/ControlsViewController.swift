@@ -16,16 +16,12 @@ class ControlsViewController: UIViewController {
     @IBOutlet var cameraTrackpadView: UIView!
     
     var movementTrackpadTGR: UITapGestureRecognizer?
-    var movementTrackpadLPGR: UILongPressGestureRecognizer?
+    var movementTrackpadPGR: UIPanGestureRecognizer?
     
     var cameraTrackpadTGR: UITapGestureRecognizer?
-    var cameraTrackpadLPGR: UILongPressGestureRecognizer?
+    var cameraTrackpadPGR: UIPanGestureRecognizer?
     
     let sendKeystrokesNotificationKey = "elg_sendKeystrokes"
-    let kMovementTrackpad = 0
-    let kCameraTrackpad = 1
-    let kTapGesture = 0
-    let kLongPressGesture = 1
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,18 +33,16 @@ class ControlsViewController: UIViewController {
         movementTrackpadTGR?.numberOfTapsRequired = 1
         movementTrackpadView.addGestureRecognizer(movementTrackpadTGR!)
         
-        movementTrackpadLPGR = UILongPressGestureRecognizer(target: self, action: "movementTrackpadRespondToLongPress:")
-        movementTrackpadLPGR?.numberOfTapsRequired = 0
-        movementTrackpadView.addGestureRecognizer(movementTrackpadLPGR!)
+        movementTrackpadPGR = UIPanGestureRecognizer(target: self, action: "movementTrackpadRespondToPanGesture:")
+        movementTrackpadView.addGestureRecognizer(movementTrackpadPGR!)
         
         // Create the Tap Gesture Recognizer for the camera trackpad
         cameraTrackpadTGR = UITapGestureRecognizer(target: self, action: "cameraTrackpadRespondToTapGesture:")
         cameraTrackpadTGR?.numberOfTapsRequired = 1
         cameraTrackpadView.addGestureRecognizer(cameraTrackpadTGR!)
         
-        cameraTrackpadLPGR = UILongPressGestureRecognizer(target: self, action: "cameraTrackpadRespondToLongPress:")
-        cameraTrackpadLPGR?.numberOfTapsRequired = 0
-        cameraTrackpadView.addGestureRecognizer(cameraTrackpadLPGR!)
+        cameraTrackpadPGR = UIPanGestureRecognizer(target: self, action: "cameraTrackpadRespondToPanGesture:")
+        cameraTrackpadView.addGestureRecognizer(cameraTrackpadPGR!)
 
     }
 
@@ -62,30 +56,64 @@ class ControlsViewController: UIViewController {
     // Movement Trackpad Gesture Recognizers
     @IBAction func movementTrackpadRespondToTapGesture(recognizer: UITapGestureRecognizer) {
         print ("movement trackpad tapped!")
-        // Must send the movement information to the game app
-        NSNotificationCenter.defaultCenter().postNotificationName(sendKeystrokesNotificationKey, object: self, userInfo: ["trackpad": kMovementTrackpad, "gesture":kTapGesture])
+        
+        var strokeInfo = Keystroke(interactionType: Keystroke.InteractionType.Trackpad)
+        strokeInfo.trackpadType = Keystroke.TrackpadType.Movement
+        strokeInfo.gestureType = Keystroke.GestureType.Tap
+        
+        let userInfoData: NSData = NSData(bytes: &strokeInfo, length: sizeof(Keystroke))
+        
+        NSNotificationCenter.defaultCenter().postNotificationName(sendKeystrokesNotificationKey, object: self, userInfo: ["strokeInfo": userInfoData])
     }
     
-    @IBAction func movementTrackpadRespondToLongPress(recognizer: UILongPressGestureRecognizer) {
-        print ("movement trackpad long press!")
-        NSNotificationCenter.defaultCenter().postNotificationName(sendKeystrokesNotificationKey, object: self, userInfo: ["trackpad": kMovementTrackpad, "gesture":kLongPressGesture])
+    @IBAction func movementTrackpadRespondToPanGesture(recognizer: UIPanGestureRecognizer) {
+        print ("movement trackpad pan gesture!")
+        
+        var strokeInfo = Keystroke(interactionType: Keystroke.InteractionType.Trackpad)
+        strokeInfo.trackpadType = Keystroke.TrackpadType.Movement
+        strokeInfo.gestureType = Keystroke.GestureType.Pan
+        
+        let userInfoData: NSData = NSData(bytes: &strokeInfo, length: sizeof(Keystroke))
+        
+        NSNotificationCenter.defaultCenter().postNotificationName(sendKeystrokesNotificationKey, object: self, userInfo: ["strokeInfo": userInfoData])
     }
     
     // Camera Trackpad Gesture Recognizers
     @IBAction func cameraTrackpadRespondToTapGesture(recognizer: UITapGestureRecognizer) {
         print ("camera trackpad tapped!")
-        NSNotificationCenter.defaultCenter().postNotificationName(sendKeystrokesNotificationKey, object: self, userInfo: ["trackpad": kCameraTrackpad, "gesture":kTapGesture])
+        
+        var strokeInfo = Keystroke(interactionType: Keystroke.InteractionType.Trackpad)
+        strokeInfo.trackpadType = Keystroke.TrackpadType.Camera
+        strokeInfo.gestureType = Keystroke.GestureType.Tap
+        
+        let userInfoData: NSData = NSData(bytes: &strokeInfo, length: sizeof(Keystroke))
+        
+        NSNotificationCenter.defaultCenter().postNotificationName(sendKeystrokesNotificationKey, object: self, userInfo: ["strokeInfo": userInfoData])
     }
     
-    @IBAction func cameraTrackpadRespondToLongPress(recognizer: UILongPressGestureRecognizer) {
-        print ("camera trackpad long press!")
-        NSNotificationCenter.defaultCenter().postNotificationName(sendKeystrokesNotificationKey, object: self, userInfo: ["trackpad": kCameraTrackpad, "gesture":kLongPressGesture])
+    @IBAction func cameraTrackpadRespondToPanGesture(recognizer: UIPanGestureRecognizer) {
+        print ("camera trackpad pan gesture!")
+        
+        var strokeInfo = Keystroke(interactionType: Keystroke.InteractionType.Trackpad)
+        strokeInfo.trackpadType = Keystroke.TrackpadType.Camera
+        strokeInfo.gestureType = Keystroke.GestureType.Pan
+        
+        let userInfoData: NSData = NSData(bytes: &strokeInfo, length: sizeof(Keystroke))
+        
+        NSNotificationCenter.defaultCenter().postNotificationName(sendKeystrokesNotificationKey, object: self, userInfo: ["strokeInfo": userInfoData])
     }
     
     // MARK: - IBAction Button Response Methods
     // Other Controller Button Action Methods
     @IBAction func crouchButton(sender: UIButton) {
         print("crouch button pressed!")
+        
+        var strokeInfo = Keystroke(interactionType: Keystroke.InteractionType.Button)
+        strokeInfo.button = Keystroke.Button.Crouch
+        
+        let userInfoData: NSData = NSData(bytes: &strokeInfo, length: sizeof(Keystroke))
+        
+        NSNotificationCenter.defaultCenter().postNotificationName(sendKeystrokesNotificationKey, object: self, userInfo: ["strokeInfo": userInfoData])
     }
 
 

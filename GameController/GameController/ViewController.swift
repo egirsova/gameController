@@ -8,6 +8,41 @@
 
 import UIKit
 
+struct Keystroke {
+    enum InteractionType {
+        case Button
+        case Trackpad
+    }
+    enum TrackpadType {
+        case Movement
+        case Camera
+    }
+    enum GestureType {
+        case Tap
+        case Pan
+    }
+    enum Button {
+        case Crouch
+        case Jump
+        case Attack
+        case Interact
+    }
+    
+    var interactionType: InteractionType?
+    var trackpadType: TrackpadType?
+    var gestureType: GestureType?
+    var button: Button?
+    
+    init() {
+        self.interactionType = nil
+    }
+    
+    init(interactionType: InteractionType) {
+        self.interactionType = interactionType
+    }
+}
+
+
 class ViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet var codeTF: UITextField!

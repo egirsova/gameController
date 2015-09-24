@@ -20,11 +20,6 @@ class ServiceBrowser : NSObject {
     let codeEnteredNotificationKey = "elg_codeEntered"
     let updateConnectionNotificationKey = "elg_connectionUpdate"
     let sendKeystrokesNotificationKey = "elg_sendKeystrokes"
-    let kMovementTrackpad = 0
-    let kCameraTrackpad = 1
-    let kTapGesture = 0
-    let kLongPressGesture = 1
-    
     
     var currentBrowser: MCNearbyServiceBrowser?
     var currentFoundPeerId: MCPeerID?
@@ -53,7 +48,7 @@ class ServiceBrowser : NSObject {
         let codeEntered = userInfo["codeEntered"]
         
         let codeData = codeEntered!.dataUsingEncoding(NSUTF8StringEncoding)
-       currentBrowser!.invitePeer(currentFoundPeerId!, toSession: self.session, withContext: codeData, timeout: 10)
+        currentBrowser!.invitePeer(currentFoundPeerId!, toSession: self.session, withContext: codeData, timeout: 10)
     }
 }
 
@@ -117,28 +112,23 @@ extension ServiceBrowser : MCSessionDelegate {
         print("peer \(peerID) didReceiveStream, with name: \(streamName)")
     }
     
+    func session(session: MCSession, didReceiveCertificate certificate: [AnyObject]?, fromPeer peerID: MCPeerID, certificateHandler: (Bool) -> Void) {
+        certificateHandler(true)
+    }
+    
     func sendKeystrokes(notification: NSNotification) {
         print("Going to send keystrokes to game app")
-        let userInfo:Dictionary<String,Int!> = notification.userInfo as! Dictionary<String,Int!>
-        let trackpad = userInfo["trackpad"]
-        let gesture = userInfo["gesture"]
-        var sendStrokes: String?
-        if trackpad == kMovementTrackpad {
-            if gesture == kTapGesture {
-                sendStrokes = "Movement trackpad trapped"
-            } else {
-                sendStrokes = "Movement trackpad long press"
-            }
-        } else {
-            if gesture == kTapGesture {
-                sendStrokes = "Camera trackpad tapped"
-            } else {
-                sendStrokes = "Camera trackpad long press"
-            }
-        }
-        let sendData = sendStrokes?.dataUsingEncoding(NSUTF8StringEncoding)
+        
+        let userInfo:Dictionary<String, NSData!> = notification.userInfo as! Dictionary<String, NSData!>
+        let strokeInfoData: NSData = userInfo["strokeInfo"]!
+        
+        var strokeInfo: Keystroke = Keystroke()
+        strokeInfoData.getBytes(&strokeInfo, length: sizeof(Keystroke))
+        
+        // First check if keystroke is a trackpad event, so that it can break apart the necessary information
+        
         do {
-        try session.sendData(sendData!, toPeers: [self.connectedPeerId!], withMode: MCSessionSendDataMode.Reliable)
+            try session.sendData(strokeInfoData, toPeers: [self.connectedPeerId!], withMode: MCSessionSendDataMode.Reliable)
         } catch {
             print("Error: Could not send data")
         }
