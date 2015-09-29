@@ -32,6 +32,8 @@ struct Keystroke {
     var trackpadType: TrackpadType?
     var gestureType: GestureType?
     var button: Button?
+    var panTranslation: CGPoint?
+    var panStart: Bool?
     
     init() {
         self.interactionType = nil
@@ -56,18 +58,28 @@ class ViewController: UIViewController, UITextFieldDelegate {
     let serviceBrowser = ServiceBrowser()
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
         statusTF.hidden = true
         spinner.hidden = true
         enterButton.enabled = false
         
         codeTF.delegate = self
         codeTF.keyboardType = .NumberPad
+        
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func switchToMainScreen() {
+        print("in switchToMainScreen")
+        dispatch_async(dispatch_get_main_queue(), {
+            print("in the main queue")
+            // Switch to main screen
+            //let vc = self.storyboard?.instantiateViewControllerWithIdentifier("main")self.view
+            [self.navigationController?.popToRootViewControllerAnimated(true)]
+        })
     }
     
     func updateConnectionDetails(notification: NSNotification) {
@@ -77,8 +89,6 @@ class ViewController: UIViewController, UITextFieldDelegate {
         print("sessionStatus: \(sessionStatus)")
         
         if(sessionStatus == "Connected") {
-            print("trying to stop animation")
-            
             dispatch_async(dispatch_get_main_queue(), {
             self.statusTF.text = "Connected!"
             print("statusTF Text: \(self.statusTF.text)")

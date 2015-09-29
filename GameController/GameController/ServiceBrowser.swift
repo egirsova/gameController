@@ -78,7 +78,6 @@ extension MCSessionState {
         case .NotConnected: return "Not Connected"
         case .Connecting: return "Connecting"
         case .Connected: return "Connected"
-        default: return "Unknown Status"
         }
     }
 }
@@ -89,10 +88,16 @@ extension ServiceBrowser : MCSessionDelegate {
         
         NSNotificationCenter.defaultCenter().postNotificationName(updateConnectionNotificationKey, object: self, userInfo: ["sessionStatus": state.stringValue()])
         
-        if state.stringValue() == "Connected"{
+        if state == MCSessionState.Connected {
             // We are now able to send data to the game app
             connectedPeerId = peerID
             NSNotificationCenter.defaultCenter().addObserver(self, selector: "sendKeystrokes:", name: sendKeystrokesNotificationKey, object: nil)
+        }
+        
+        if state == MCSessionState.NotConnected {
+            // Here must return to the main screen
+            // Try sending invite again
+            
         }
     }
     
@@ -124,8 +129,6 @@ extension ServiceBrowser : MCSessionDelegate {
         
         var strokeInfo: Keystroke = Keystroke()
         strokeInfoData.getBytes(&strokeInfo, length: sizeof(Keystroke))
-        
-        // First check if keystroke is a trackpad event, so that it can break apart the necessary information
         
         do {
             try session.sendData(strokeInfoData, toPeers: [self.connectedPeerId!], withMode: MCSessionSendDataMode.Reliable)

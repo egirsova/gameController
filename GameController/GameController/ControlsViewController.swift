@@ -12,6 +12,9 @@ import QuartzCore
 class ControlsViewController: UIViewController {
 
     @IBOutlet var crouchButton: UIButton!
+    @IBOutlet var interactButton: UIButton!
+    @IBOutlet var jumpButton: UIButton!
+    @IBOutlet var attackButton: UIButton!
     @IBOutlet var movementTrackpadView: UIView!
     @IBOutlet var cameraTrackpadView: UIView!
     
@@ -25,8 +28,14 @@ class ControlsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        crouchButton.layer.borderWidth = 1.0
+        crouchButton.layer.borderWidth = 0.5
         crouchButton.layer.borderColor = UIColor.whiteColor().CGColor
+        interactButton.layer.borderWidth = 0.5
+        interactButton.layer.borderColor = UIColor.whiteColor().CGColor
+        jumpButton.layer.borderWidth = 0.5
+        jumpButton.layer.borderColor = UIColor.whiteColor().CGColor
+        attackButton.layer.borderWidth = 0.5
+        attackButton.layer.borderColor = UIColor.whiteColor().CGColor
         
         // Create the Tap Gesture Recognizer for the movement trackpad
         movementTrackpadTGR = UITapGestureRecognizer(target: self, action: "movementTrackpadRespondToTapGesture:")
@@ -43,14 +52,12 @@ class ControlsViewController: UIViewController {
         
         cameraTrackpadPGR = UIPanGestureRecognizer(target: self, action: "cameraTrackpadRespondToPanGesture:")
         cameraTrackpadView.addGestureRecognizer(cameraTrackpadPGR!)
-
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
     
     // MARK: - Gesture Recognizer Response Methods
     // Movement Trackpad Gesture Recognizers
@@ -72,6 +79,20 @@ class ControlsViewController: UIViewController {
         var strokeInfo = Keystroke(interactionType: Keystroke.InteractionType.Trackpad)
         strokeInfo.trackpadType = Keystroke.TrackpadType.Movement
         strokeInfo.gestureType = Keystroke.GestureType.Pan
+        
+        if recognizer.state == UIGestureRecognizerState.Began {
+            // What to do when panning has just started
+            let translationPoint = recognizer.translationInView(movementTrackpadView)
+            strokeInfo.panTranslation = translationPoint
+            strokeInfo.panStart = true
+        } else if recognizer.state == UIGestureRecognizerState.Changed {
+            // What to do as user is panning
+            let translationPoint = recognizer.translationInView(movementTrackpadView)
+            strokeInfo.panTranslation = translationPoint
+        } else if recognizer.state == UIGestureRecognizerState.Ended {
+            // What to do when user has ceased panning
+            
+        }
         
         let userInfoData: NSData = NSData(bytes: &strokeInfo, length: sizeof(Keystroke))
         
@@ -98,14 +119,28 @@ class ControlsViewController: UIViewController {
         strokeInfo.trackpadType = Keystroke.TrackpadType.Camera
         strokeInfo.gestureType = Keystroke.GestureType.Pan
         
-        let userInfoData: NSData = NSData(bytes: &strokeInfo, length: sizeof(Keystroke))
+        if recognizer.state == UIGestureRecognizerState.Began {
+            // What to do when panning has just started
+            let translationPoint = recognizer.translationInView(movementTrackpadView)
+            strokeInfo.panTranslation = translationPoint
+        } else if recognizer.state == UIGestureRecognizerState.Changed {
+            // What to do as user is panning
+            let translationPoint = recognizer.translationInView(movementTrackpadView)
+            strokeInfo.panTranslation = translationPoint
+        } else if recognizer.state == UIGestureRecognizerState.Ended {
+            // What to do when user has ceased panning
+            
+        }
+        
+            print("pan gesture significant")
+            let userInfoData: NSData = NSData(bytes: &strokeInfo, length: sizeof(Keystroke))
         
         NSNotificationCenter.defaultCenter().postNotificationName(sendKeystrokesNotificationKey, object: self, userInfo: ["strokeInfo": userInfoData])
     }
     
     // MARK: - IBAction Button Response Methods
     // Other Controller Button Action Methods
-    @IBAction func crouchButton(sender: UIButton) {
+    @IBAction func crouchButtonPressed(sender: UIButton) {
         print("crouch button pressed!")
         
         var strokeInfo = Keystroke(interactionType: Keystroke.InteractionType.Button)
@@ -115,8 +150,39 @@ class ControlsViewController: UIViewController {
         
         NSNotificationCenter.defaultCenter().postNotificationName(sendKeystrokesNotificationKey, object: self, userInfo: ["strokeInfo": userInfoData])
     }
-
-
+    
+    @IBAction func interactButtonPressed(sender: UIButton) {
+        print("interact button pressed")
+        
+        var strokeInfo = Keystroke(interactionType: Keystroke.InteractionType.Button)
+        strokeInfo.button = Keystroke.Button.Interact
+        
+        let userInfoData: NSData = NSData(bytes: &strokeInfo, length: sizeof(Keystroke))
+        
+        NSNotificationCenter.defaultCenter().postNotificationName(sendKeystrokesNotificationKey, object: self, userInfo: ["strokeInfo": userInfoData])
+    }
+    
+    @IBAction func jumpButtonPressed(sender: UIButton) {
+        print("jump button pressed")
+        
+        var strokeInfo = Keystroke(interactionType: Keystroke.InteractionType.Button)
+        strokeInfo.button = Keystroke.Button.Jump
+        
+        let userInfoData: NSData = NSData(bytes: &strokeInfo, length: sizeof(Keystroke))
+        
+        NSNotificationCenter.defaultCenter().postNotificationName(sendKeystrokesNotificationKey, object: self, userInfo: ["strokeInfo": userInfoData])
+    }
+    
+    @IBAction func attackButtonPressed(sender: UIButton) {
+        print("attack button pressed")
+        
+        var strokeInfo = Keystroke(interactionType: Keystroke.InteractionType.Button)
+        strokeInfo.button = Keystroke.Button.Attack
+        
+        let userInfoData: NSData = NSData(bytes: &strokeInfo, length: sizeof(Keystroke))
+        
+        NSNotificationCenter.defaultCenter().postNotificationName(sendKeystrokesNotificationKey, object: self, userInfo: ["strokeInfo": userInfoData])
+    }
 
     /*
     // MARK: - Navigation
