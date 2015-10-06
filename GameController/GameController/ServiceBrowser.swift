@@ -122,7 +122,6 @@ extension ServiceBrowser : MCSessionDelegate {
     }
     
     func sendKeystrokes(notification: NSNotification) {
-        print("Going to send keystrokes to game app")
         
         let userInfo:Dictionary<String, NSData!> = notification.userInfo as! Dictionary<String, NSData!>
         let strokeInfoData: NSData = userInfo["strokeInfo"]!

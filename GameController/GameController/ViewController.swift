@@ -23,7 +23,6 @@ struct Keystroke {
     }
     enum Button {
         case Crouch
-        case Jump
         case Attack
         case Interact
     }

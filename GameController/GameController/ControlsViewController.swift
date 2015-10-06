@@ -13,7 +13,6 @@ class ControlsViewController: UIViewController {
 
     @IBOutlet var crouchButton: UIButton!
     @IBOutlet var interactButton: UIButton!
-    @IBOutlet var jumpButton: UIButton!
     @IBOutlet var attackButton: UIButton!
     @IBOutlet var movementTrackpadView: UIView!
     @IBOutlet var cameraTrackpadView: UIView!
@@ -32,8 +31,6 @@ class ControlsViewController: UIViewController {
         crouchButton.layer.borderColor = UIColor.whiteColor().CGColor
         interactButton.layer.borderWidth = 0.5
         interactButton.layer.borderColor = UIColor.whiteColor().CGColor
-        jumpButton.layer.borderWidth = 0.5
-        jumpButton.layer.borderColor = UIColor.whiteColor().CGColor
         attackButton.layer.borderWidth = 0.5
         attackButton.layer.borderColor = UIColor.whiteColor().CGColor
         
@@ -47,7 +44,7 @@ class ControlsViewController: UIViewController {
         
         // Create the Tap Gesture Recognizer for the camera trackpad
         cameraTrackpadTGR = UITapGestureRecognizer(target: self, action: "cameraTrackpadRespondToTapGesture:")
-        cameraTrackpadTGR?.numberOfTapsRequired = 1
+        cameraTrackpadTGR?.numberOfTapsRequired = 2 // Double tap required for jump
         cameraTrackpadView.addGestureRecognizer(cameraTrackpadTGR!)
         
         cameraTrackpadPGR = UIPanGestureRecognizer(target: self, action: "cameraTrackpadRespondToPanGesture:")
@@ -62,11 +59,12 @@ class ControlsViewController: UIViewController {
     // MARK: - Gesture Recognizer Response Methods
     // Movement Trackpad Gesture Recognizers
     @IBAction func movementTrackpadRespondToTapGesture(recognizer: UITapGestureRecognizer) {
-        print ("movement trackpad tapped!")
         
         var strokeInfo = Keystroke(interactionType: Keystroke.InteractionType.Trackpad)
         strokeInfo.trackpadType = Keystroke.TrackpadType.Movement
         strokeInfo.gestureType = Keystroke.GestureType.Tap
+        
+        print("Tapped")
         
         let userInfoData: NSData = NSData(bytes: &strokeInfo, length: sizeof(Keystroke))
         
@@ -74,23 +72,35 @@ class ControlsViewController: UIViewController {
     }
     
     @IBAction func movementTrackpadRespondToPanGesture(recognizer: UIPanGestureRecognizer) {
-        print ("movement trackpad pan gesture!")
         
         var strokeInfo = Keystroke(interactionType: Keystroke.InteractionType.Trackpad)
         strokeInfo.trackpadType = Keystroke.TrackpadType.Movement
         strokeInfo.gestureType = Keystroke.GestureType.Pan
+        
+        let radius: CGFloat = 30.0
+        let circle = CAShapeLayer()
         
         if recognizer.state == UIGestureRecognizerState.Began {
             // What to do when panning has just started
             let translationPoint = recognizer.translationInView(movementTrackpadView)
             strokeInfo.panTranslation = translationPoint
             strokeInfo.panStart = true
+            
+            circle.path = (UIBezierPath(roundedRect: CGRectMake(0, 0, CGFloat(2.0)*radius, 2.0*radius), cornerRadius: radius)).CGPath
+            circle.position = CGPointMake(recognizer.locationInView(movementTrackpadView).x, recognizer.locationInView(movementTrackpadView).y)
+            circle.fillColor = UIColor.redColor().CGColor
+            circle.opacity = 0.3
+            movementTrackpadView.layer.addSublayer(circle)
+            
         } else if recognizer.state == UIGestureRecognizerState.Changed {
             // What to do as user is panning
             let translationPoint = recognizer.translationInView(movementTrackpadView)
             strokeInfo.panTranslation = translationPoint
         } else if recognizer.state == UIGestureRecognizerState.Ended {
             // What to do when user has ceased panning
+            dispatch_async(dispatch_get_main_queue(), {
+                self.movementTrackpadView.layer.sublayers?.popLast()
+            })
             
         }
         
@@ -101,7 +111,6 @@ class ControlsViewController: UIViewController {
     
     // Camera Trackpad Gesture Recognizers
     @IBAction func cameraTrackpadRespondToTapGesture(recognizer: UITapGestureRecognizer) {
-        print ("camera trackpad tapped!")
         
         var strokeInfo = Keystroke(interactionType: Keystroke.InteractionType.Trackpad)
         strokeInfo.trackpadType = Keystroke.TrackpadType.Camera
@@ -113,26 +122,36 @@ class ControlsViewController: UIViewController {
     }
     
     @IBAction func cameraTrackpadRespondToPanGesture(recognizer: UIPanGestureRecognizer) {
-        print ("camera trackpad pan gesture!")
-        
         var strokeInfo = Keystroke(interactionType: Keystroke.InteractionType.Trackpad)
         strokeInfo.trackpadType = Keystroke.TrackpadType.Camera
         strokeInfo.gestureType = Keystroke.GestureType.Pan
         
+        let radius: CGFloat = 30.0
+        let circle = CAShapeLayer()
+        
         if recognizer.state == UIGestureRecognizerState.Began {
             // What to do when panning has just started
-            let translationPoint = recognizer.translationInView(movementTrackpadView)
+            let translationPoint = recognizer.translationInView(cameraTrackpadView)
             strokeInfo.panTranslation = translationPoint
+            strokeInfo.panStart = true
+            
+            circle.path = (UIBezierPath(roundedRect: CGRectMake(0, 0, CGFloat(2.0)*radius, 2.0*radius), cornerRadius: radius)).CGPath
+            circle.position = CGPointMake(recognizer.locationInView(cameraTrackpadView).x, recognizer.locationInView(cameraTrackpadView).y)
+            circle.fillColor = UIColor.greenColor().CGColor
+            circle.opacity = 0.3
+            cameraTrackpadView.layer.addSublayer(circle)
+            
         } else if recognizer.state == UIGestureRecognizerState.Changed {
             // What to do as user is panning
-            let translationPoint = recognizer.translationInView(movementTrackpadView)
+            let translationPoint = recognizer.translationInView(cameraTrackpadView)
             strokeInfo.panTranslation = translationPoint
         } else if recognizer.state == UIGestureRecognizerState.Ended {
             // What to do when user has ceased panning
-            
+            dispatch_async(dispatch_get_main_queue(), {
+                self.cameraTrackpadView.layer.sublayers?.popLast()
+            })
         }
         
-            print("pan gesture significant")
             let userInfoData: NSData = NSData(bytes: &strokeInfo, length: sizeof(Keystroke))
         
         NSNotificationCenter.defaultCenter().postNotificationName(sendKeystrokesNotificationKey, object: self, userInfo: ["strokeInfo": userInfoData])
@@ -156,17 +175,6 @@ class ControlsViewController: UIViewController {
         
         var strokeInfo = Keystroke(interactionType: Keystroke.InteractionType.Button)
         strokeInfo.button = Keystroke.Button.Interact
-        
-        let userInfoData: NSData = NSData(bytes: &strokeInfo, length: sizeof(Keystroke))
-        
-        NSNotificationCenter.defaultCenter().postNotificationName(sendKeystrokesNotificationKey, object: self, userInfo: ["strokeInfo": userInfoData])
-    }
-    
-    @IBAction func jumpButtonPressed(sender: UIButton) {
-        print("jump button pressed")
-        
-        var strokeInfo = Keystroke(interactionType: Keystroke.InteractionType.Button)
-        strokeInfo.button = Keystroke.Button.Jump
         
         let userInfoData: NSData = NSData(bytes: &strokeInfo, length: sizeof(Keystroke))
         

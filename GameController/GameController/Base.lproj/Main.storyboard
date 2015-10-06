@@ -94,24 +94,8 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="w4F-xx-Ctd">
                                 <rect key="frame" x="229" y="0.0" width="438" height="375"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pal-jx-YQ8">
-                                        <rect key="frame" x="143" y="331" width="152" height="44"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="145" id="rWS-qI-Sb8"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="21"/>
-                                        <state key="normal" title="Jump"/>
-                                        <variation key="default">
-                                            <mask key="constraints">
-                                                <exclude reference="rWS-qI-Sb8"/>
-                                            </mask>
-                                        </variation>
-                                        <connections>
-                                            <action selector="jumpButtonPressed:" destination="IPe-es-dJn" eventType="touchUpInside" id="T6D-K2-5Ap"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="D3t-a6-LN5">
-                                        <rect key="frame" x="296" y="331" width="142" height="44"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="D3t-a6-LN5">
+                                        <rect key="frame" x="220" y="331" width="218" height="44"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="44" id="REf-uu-lf9"/>
                                         </constraints>
@@ -122,9 +106,9 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0G2-Yg-5Ut">
-                                        <rect key="frame" x="0.0" y="331" width="145" height="44"/>
+                                        <rect key="frame" x="0.0" y="331" width="212" height="44"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="145" id="Gm5-JY-slU"/>
+                                            <constraint firstAttribute="width" constant="212" id="Gm5-JY-slU"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="21"/>
                                         <state key="normal" title="Interact"/>
@@ -132,43 +116,38 @@
                                             <action selector="interactButtonPressed:" destination="IPe-es-dJn" eventType="touchUpInside" id="PtG-Ye-sBy"/>
                                         </connections>
                                     </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Camera View Trackpad" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lj5-no-YBt">
+                                        <rect key="frame" x="131" y="177" width="177" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" red="0.0" green="0.1137254902" blue="0.21176470589999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstItem="D3t-a6-LN5" firstAttribute="leading" secondItem="0G2-Yg-5Ut" secondAttribute="trailing" constant="151" id="2FI-we-iDk"/>
                                     <constraint firstItem="D3t-a6-LN5" firstAttribute="width" secondItem="0G2-Yg-5Ut" secondAttribute="width" id="2s7-fl-JLj"/>
-                                    <constraint firstItem="Pal-jx-YQ8" firstAttribute="width" secondItem="0G2-Yg-5Ut" secondAttribute="width" id="E2H-ah-tbS"/>
-                                    <constraint firstItem="Pal-jx-YQ8" firstAttribute="leading" secondItem="w4F-xx-Ctd" secondAttribute="leading" id="EIz-xS-A4s"/>
+                                    <constraint firstItem="D3t-a6-LN5" firstAttribute="baseline" secondItem="0G2-Yg-5Ut" secondAttribute="firstBaseline" id="Cf4-sh-gm4"/>
                                     <constraint firstItem="0G2-Yg-5Ut" firstAttribute="leading" secondItem="w4F-xx-Ctd" secondAttribute="leading" id="GPX-ur-6oE"/>
-                                    <constraint firstItem="Pal-jx-YQ8" firstAttribute="leading" secondItem="w4F-xx-Ctd" secondAttribute="leading" constant="1" id="Hfk-Sh-avh"/>
+                                    <constraint firstItem="D3t-a6-LN5" firstAttribute="leading" secondItem="0G2-Yg-5Ut" secondAttribute="trailing" id="LvC-bk-6pD"/>
                                     <constraint firstItem="D3t-a6-LN5" firstAttribute="trailing" secondItem="w4F-xx-Ctd" secondAttribute="trailingMargin" id="MmH-cc-jEK"/>
+                                    <constraint firstItem="D3t-a6-LN5" firstAttribute="leading" secondItem="0G2-Yg-5Ut" secondAttribute="trailing" constant="8" symbolic="YES" id="Odd-ER-wSf"/>
                                     <constraint firstItem="0G2-Yg-5Ut" firstAttribute="top" secondItem="D3t-a6-LN5" secondAttribute="top" id="Q3T-vt-ydY"/>
-                                    <constraint firstItem="0G2-Yg-5Ut" firstAttribute="baseline" secondItem="Pal-jx-YQ8" secondAttribute="baseline" id="SMu-TD-yc4"/>
-                                    <constraint firstItem="0G2-Yg-5Ut" firstAttribute="baseline" secondItem="Pal-jx-YQ8" secondAttribute="firstBaseline" id="YkM-DC-XCZ"/>
                                     <constraint firstItem="0G2-Yg-5Ut" firstAttribute="baseline" secondItem="D3t-a6-LN5" secondAttribute="baseline" id="big-Uj-uak"/>
-                                    <constraint firstItem="Pal-jx-YQ8" firstAttribute="width" secondItem="0G2-Yg-5Ut" secondAttribute="width" id="dRP-mT-H3O"/>
-                                    <constraint firstItem="0G2-Yg-5Ut" firstAttribute="top" secondItem="Pal-jx-YQ8" secondAttribute="top" id="fa9-nZ-bvx"/>
-                                    <constraint firstItem="Pal-jx-YQ8" firstAttribute="leading" secondItem="w4F-xx-Ctd" secondAttribute="leading" id="gk5-ey-DEU"/>
-                                    <constraint firstItem="0G2-Yg-5Ut" firstAttribute="firstBaseline" secondItem="Pal-jx-YQ8" secondAttribute="baseline" id="gku-5v-xuh"/>
+                                    <constraint firstItem="D3t-a6-LN5" firstAttribute="leading" secondItem="0G2-Yg-5Ut" secondAttribute="trailing" constant="8" id="feh-sl-zEk"/>
                                     <constraint firstAttribute="bottom" secondItem="0G2-Yg-5Ut" secondAttribute="bottom" id="jr6-pu-JgY"/>
-                                    <constraint firstItem="D3t-a6-LN5" firstAttribute="leading" secondItem="Pal-jx-YQ8" secondAttribute="trailing" constant="1" id="kQA-BO-zm9"/>
-                                    <constraint firstItem="Pal-jx-YQ8" firstAttribute="leading" secondItem="0G2-Yg-5Ut" secondAttribute="trailing" constant="1" id="noK-dC-XhA"/>
                                     <constraint firstItem="0G2-Yg-5Ut" firstAttribute="baseline" secondItem="D3t-a6-LN5" secondAttribute="firstBaseline" id="nqm-PB-8xJ"/>
-                                    <constraint firstItem="D3t-a6-LN5" firstAttribute="leading" secondItem="Pal-jx-YQ8" secondAttribute="trailing" id="unb-9L-9Bz"/>
                                     <constraint firstItem="0G2-Yg-5Ut" firstAttribute="leading" secondItem="w4F-xx-Ctd" secondAttribute="leading" id="xEn-Rc-0La"/>
-                                    <constraint firstItem="D3t-a6-LN5" firstAttribute="width" secondItem="0G2-Yg-5Ut" secondAttribute="width" constant="-3" id="z6s-uP-oWb"/>
+                                    <constraint firstItem="D3t-a6-LN5" firstAttribute="width" secondItem="0G2-Yg-5Ut" secondAttribute="width" constant="6" id="z6s-uP-oWb"/>
                                 </constraints>
                                 <variation key="default">
                                     <mask key="constraints">
                                         <exclude reference="GPX-ur-6oE"/>
-                                        <exclude reference="Hfk-Sh-avh"/>
-                                        <exclude reference="dRP-mT-H3O"/>
-                                        <exclude reference="gk5-ey-DEU"/>
-                                        <exclude reference="noK-dC-XhA"/>
                                         <exclude reference="2FI-we-iDk"/>
                                         <exclude reference="2s7-fl-JLj"/>
+                                        <exclude reference="LvC-bk-6pD"/>
                                         <exclude reference="MmH-cc-jEK"/>
-                                        <exclude reference="unb-9L-9Bz"/>
+                                        <exclude reference="Odd-ER-wSf"/>
                                     </mask>
                                 </variation>
                             </view>
@@ -186,6 +165,12 @@
                                             <action selector="crouchButtonPressed:" destination="IPe-es-dJn" eventType="touchUpInside" id="OX3-CF-I5H"/>
                                         </connections>
                                     </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Movement Trackpad" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VBK-l2-nz0">
+                                        <rect key="frame" x="36" y="177" width="157" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" red="0.0" green="0.1137254902" blue="0.21176470589999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -223,7 +208,6 @@
                         <outlet property="cameraTrackpadView" destination="w4F-xx-Ctd" id="8lX-TZ-r2r"/>
                         <outlet property="crouchButton" destination="O1P-jN-6Pl" id="65b-P3-5jV"/>
                         <outlet property="interactButton" destination="0G2-Yg-5Ut" id="jQo-db-QD7"/>
-                        <outlet property="jumpButton" destination="Pal-jx-YQ8" id="txp-d8-hCw"/>
                         <outlet property="movementTrackpadView" destination="ZLk-3S-Zl4" id="VSf-rN-TO2"/>
                     </connections>
                 </viewController>
