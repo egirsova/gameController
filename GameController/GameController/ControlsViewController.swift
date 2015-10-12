@@ -99,7 +99,7 @@ class ControlsViewController: UIViewController {
         } else if recognizer.state == UIGestureRecognizerState.Ended {
             // What to do when user has ceased panning
             dispatch_async(dispatch_get_main_queue(), {
-                self.movementTrackpadView.layer.sublayers?.popLast()
+                self.movementTrackpadView.layer.sublayers?.popLast() 
             })
             
         }
