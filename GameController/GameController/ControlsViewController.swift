@@ -64,8 +64,6 @@ class ControlsViewController: UIViewController {
         strokeInfo.trackpadType = Keystroke.TrackpadType.Movement
         strokeInfo.gestureType = Keystroke.GestureType.Tap
         
-        print("Tapped")
-        
         let userInfoData: NSData = NSData(bytes: &strokeInfo, length: sizeof(Keystroke))
         
         NSNotificationCenter.defaultCenter().postNotificationName(sendKeystrokesNotificationKey, object: self, userInfo: ["strokeInfo": userInfoData])
@@ -182,8 +180,6 @@ class ControlsViewController: UIViewController {
     }
     
     @IBAction func attackButtonPressed(sender: UIButton) {
-        print("attack button pressed")
-        
         var strokeInfo = Keystroke(interactionType: Keystroke.InteractionType.Button)
         strokeInfo.button = Keystroke.Button.Attack
         

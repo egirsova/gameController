@@ -98,7 +98,12 @@ class ViewController: UIViewController, UITextFieldDelegate {
             let vc = self.storyboard?.instantiateViewControllerWithIdentifier("controls")
                 self.showViewController(vc! as UIViewController, sender: vc)
             })
-        } 
+        } else if sessionStatus == "Not Connected" {
+            dispatch_async(dispatch_get_main_queue(), {
+                self.statusTF.text = "Unable to Connect"
+                self.spinner.hidden = true
+            })
+        }
     }
     
     @IBAction func enterButton(sender: UIButton)

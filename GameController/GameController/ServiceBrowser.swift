@@ -14,17 +14,32 @@ class ServiceBrowser : NSObject {
     private let serviceBrowser : MCNearbyServiceBrowser
     
     private let gameServiceType = "elg-escape-game"
-    private let peerId = MCPeerID(displayName: UIDevice.currentDevice().name)
-    var connectedPeerId: MCPeerID?
-    
     let codeEnteredNotificationKey = "elg_codeEntered"
     let updateConnectionNotificationKey = "elg_connectionUpdate"
     let sendKeystrokesNotificationKey = "elg_sendKeystrokes"
+    let kPeerIDKey = "elg-peerid"
+    
+    private let peerId: MCPeerID
+    var connectedPeerId: MCPeerID?
     
     var currentBrowser: MCNearbyServiceBrowser?
     var currentFoundPeerId: MCPeerID?
+    var defaults: NSUserDefaults
     
     override init() {
+        
+        defaults = NSUserDefaults.standardUserDefaults()
+        if let peerIDData = defaults.dataForKey(kPeerIDKey) {
+            peerId = NSKeyedUnarchiver.unarchiveObjectWithData(peerIDData) as! MCPeerID
+            print("peerID already exists: \(peerId)")
+        } else {
+            print("peerID does not yet exist. Create a new one.")
+            peerId = MCPeerID(displayName: UIDevice.currentDevice().name)
+            let peerIDData = NSKeyedArchiver.archivedDataWithRootObject(peerId)
+            defaults.setObject(peerIDData, forKey: kPeerIDKey)
+            defaults.synchronize()
+        }
+        
         self.serviceBrowser = MCNearbyServiceBrowser(peer: peerId, serviceType: gameServiceType)
         super.init()
         self.serviceBrowser.delegate = self
@@ -43,12 +58,12 @@ class ServiceBrowser : NSObject {
         }()
     
     func sendInvite(notification: NSNotification) {
-        print("Sending invite")
+        print("Sending invite to peer: \(currentFoundPeerId)")
         let userInfo:Dictionary<String,String!> = notification.userInfo as! Dictionary<String,String!>
         let codeEntered = userInfo["codeEntered"]
         
         let codeData = codeEntered!.dataUsingEncoding(NSUTF8StringEncoding)
-        currentBrowser!.invitePeer(currentFoundPeerId!, toSession: self.session, withContext: codeData, timeout: 10)
+        currentBrowser!.invitePeer(currentFoundPeerId!, toSession: self.session, withContext: codeData, timeout: 15)
     }
 }
 
