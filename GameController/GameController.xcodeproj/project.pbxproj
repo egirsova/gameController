@@ -14,8 +14,8 @@
 		9E230EDE1BB07C260046CC4E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9E230EDC1BB07C260046CC4E /* LaunchScreen.storyboard */; };
 		9E230EE91BB07C260046CC4E /* GameControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E230EE81BB07C260046CC4E /* GameControllerTests.swift */; };
 		9E230EF41BB07C270046CC4E /* GameControllerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E230EF31BB07C270046CC4E /* GameControllerUITests.swift */; };
-		9E230F3F1BB084080046CC4E /* ServiceBrowser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E230F3E1BB084080046CC4E /* ServiceBrowser.swift */; settings = {ASSET_TAGS = (); }; };
-		9E8D12EB1BB1C2270016AC74 /* ControlsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8D12EA1BB1C2270016AC74 /* ControlsViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		9E230F3F1BB084080046CC4E /* ServiceBrowser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E230F3E1BB084080046CC4E /* ServiceBrowser.swift */; };
+		9E8D12EB1BB1C2270016AC74 /* ControlsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8D12EA1BB1C2270016AC74 /* ControlsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -415,6 +415,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = GameController/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.girsova.GameController;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -429,6 +430,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = GameController/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.girsova.GameController;
 				PRODUCT_NAME = "$(TARGET_NAME)";

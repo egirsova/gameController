@@ -14,17 +14,18 @@ class ServiceBrowser : NSObject {
     private let serviceBrowser : MCNearbyServiceBrowser
     
     private let gameServiceType = "elg-escape-game"
-    let codeEnteredNotificationKey = "elg_codeEntered"
+    let kFoundPeer = "elg-foundPeer"
+    let kSendInvite = "elg-sendInvite"
     let updateConnectionNotificationKey = "elg_connectionUpdate"
     let sendKeystrokesNotificationKey = "elg_sendKeystrokes"
     let kPeerIDKey = "elg-peerid"
     
     private let peerId: MCPeerID
-    var connectedPeerId: MCPeerID?
+    private var connectedPeerId: MCPeerID?
     
-    var currentBrowser: MCNearbyServiceBrowser?
-    var currentFoundPeerId: MCPeerID?
-    var defaults: NSUserDefaults
+    private var currentBrowser: MCNearbyServiceBrowser?
+    var foundPeerIds: Array<MCPeerID>?
+    private var defaults: NSUserDefaults
     
     override init() {
         
@@ -45,6 +46,8 @@ class ServiceBrowser : NSObject {
         self.serviceBrowser.delegate = self
         self.serviceBrowser.startBrowsingForPeers()
         print("Started browsing for peers...")
+        
+        foundPeerIds = [MCPeerID]()
     }
     
     deinit {
@@ -58,12 +61,19 @@ class ServiceBrowser : NSObject {
         }()
     
     func sendInvite(notification: NSNotification) {
-        print("Sending invite to peer: \(currentFoundPeerId)")
         let userInfo:Dictionary<String,String!> = notification.userInfo as! Dictionary<String,String!>
-        let codeEntered = userInfo["codeEntered"]
+        let peerIdInvite = userInfo["peerId"]
+        print("Sending invite to peer: \(peerIdInvite)")
         
-        let codeData = codeEntered!.dataUsingEncoding(NSUTF8StringEncoding)
-        currentBrowser!.invitePeer(currentFoundPeerId!, toSession: self.session, withContext: codeData, timeout: 15)
+        var mcPeerIdInvite: MCPeerID?
+        
+        for id in self.foundPeerIds! {
+            if id.displayName == peerIdInvite {
+                mcPeerIdInvite = id
+            }
+        }
+        
+        currentBrowser!.invitePeer(mcPeerIdInvite!, toSession: self.session, withContext: nil, timeout: 15)
     }
 }
 
@@ -77,8 +87,12 @@ extension ServiceBrowser : MCNearbyServiceBrowserDelegate {
         print("foundPeer: \(peerID)")
         // Invite any peer discovered
         currentBrowser = browser
-        currentFoundPeerId = peerID
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "sendInvite:", name: codeEnteredNotificationKey, object: nil)
+        
+        self.foundPeerIds?.append(peerID)
+        
+        NSNotificationCenter.defaultCenter().postNotificationName(kFoundPeer, object: self, userInfo: nil)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "sendInvite:", name: kSendInvite, object: nil)
     }
     
     func browser(browser: MCNearbyServiceBrowser, lostPeer peerID: MCPeerID) {

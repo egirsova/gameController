@@ -24,6 +24,7 @@ class ControlsViewController: UIViewController {
     var cameraTrackpadPGR: UIPanGestureRecognizer?
     
     let sendKeystrokesNotificationKey = "elg_sendKeystrokes"
+    let kFoundPeer = "elg-foundPeer"
     
     override func viewDidLoad() {
         super.viewDidLoad()
