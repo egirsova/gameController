@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9059" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -146,10 +146,10 @@
                                 <rect key="frame" x="255" y="0.0" width="127" height="375"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="100" verticalHuggingPriority="100" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="D3t-a6-LN5">
-                                        <rect key="frame" x="0.0" y="124" width="127" height="125"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="127" height="375"/>
                                         <animations/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="125" id="4AS-x1-4nw"/>
+                                            <constraint firstAttribute="height" constant="375" id="4AS-x1-4nw"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="21"/>
                                         <state key="normal" title="Attack"/>
@@ -157,64 +157,14 @@
                                             <action selector="attackButtonPressed:" destination="IPe-es-dJn" eventType="touchUpInside" id="AUn-3C-7vI"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0G2-Yg-5Ut">
-                                        <rect key="frame" x="0.0" y="-1" width="127" height="125"/>
-                                        <animations/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="220" id="Gm5-JY-slU"/>
-                                            <constraint firstAttribute="height" constant="125" id="UxP-RK-Jpu"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="21"/>
-                                        <state key="normal" title="Interact"/>
-                                        <variation key="default">
-                                            <mask key="constraints">
-                                                <exclude reference="Gm5-JY-slU"/>
-                                            </mask>
-                                        </variation>
-                                        <connections>
-                                            <action selector="interactButtonPressed:" destination="IPe-es-dJn" eventType="touchUpInside" id="PtG-Ye-sBy"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="O1P-jN-6Pl">
-                                        <rect key="frame" x="0.0" y="249" width="127" height="125"/>
-                                        <animations/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="210" id="rOq-cK-0qH"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="21"/>
-                                        <state key="normal" title="Crouch"/>
-                                        <variation key="default">
-                                            <mask key="constraints">
-                                                <exclude reference="rOq-cK-0qH"/>
-                                            </mask>
-                                        </variation>
-                                        <connections>
-                                            <action selector="crouchButtonPressed:" destination="IPe-es-dJn" eventType="touchUpInside" id="OX3-CF-I5H"/>
-                                        </connections>
-                                    </button>
                                 </subviews>
                                 <animations/>
                                 <color key="backgroundColor" red="0.039215686274509803" green="0.070588235294117646" blue="0.15294117647058825" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="O1P-jN-6Pl" secondAttribute="trailing" id="2yV-WC-qY4"/>
-                                    <constraint firstItem="O1P-jN-6Pl" firstAttribute="trailing" secondItem="D3t-a6-LN5" secondAttribute="trailing" id="3eJ-eC-pQS"/>
-                                    <constraint firstItem="0G2-Yg-5Ut" firstAttribute="centerY" secondItem="T4Z-Bj-e45" secondAttribute="centerY" id="CD6-1z-I7I"/>
-                                    <constraint firstItem="D3t-a6-LN5" firstAttribute="top" secondItem="0G2-Yg-5Ut" secondAttribute="bottom" id="EtP-rm-qrG"/>
-                                    <constraint firstItem="0G2-Yg-5Ut" firstAttribute="leading" secondItem="D3t-a6-LN5" secondAttribute="leading" id="Iow-tN-Oqz"/>
-                                    <constraint firstAttribute="bottom" secondItem="O1P-jN-6Pl" secondAttribute="bottom" constant="1" id="SCZ-j7-1it"/>
-                                    <constraint firstItem="O1P-jN-6Pl" firstAttribute="leading" secondItem="T4Z-Bj-e45" secondAttribute="leading" id="Syr-HE-aPx"/>
-                                    <constraint firstItem="0G2-Yg-5Ut" firstAttribute="top" secondItem="T4Z-Bj-e45" secondAttribute="top" constant="-1" id="Tut-0I-Pj0"/>
-                                    <constraint firstItem="O1P-jN-6Pl" firstAttribute="centerY" secondItem="T4Z-Bj-e45" secondAttribute="centerY" id="Y66-pP-bxk"/>
-                                    <constraint firstItem="0G2-Yg-5Ut" firstAttribute="trailing" secondItem="D3t-a6-LN5" secondAttribute="trailing" id="YpH-Ze-hpL"/>
-                                    <constraint firstItem="O1P-jN-6Pl" firstAttribute="leading" secondItem="D3t-a6-LN5" secondAttribute="leading" id="jPg-zv-aRs"/>
-                                    <constraint firstItem="O1P-jN-6Pl" firstAttribute="top" secondItem="D3t-a6-LN5" secondAttribute="bottom" id="uUh-zb-ZX6"/>
+                                    <constraint firstAttribute="trailing" secondItem="D3t-a6-LN5" secondAttribute="trailing" id="BKh-9X-6wG"/>
+                                    <constraint firstItem="D3t-a6-LN5" firstAttribute="leading" secondItem="T4Z-Bj-e45" secondAttribute="leading" id="ThF-k0-9Ah"/>
+                                    <constraint firstItem="D3t-a6-LN5" firstAttribute="top" secondItem="T4Z-Bj-e45" secondAttribute="top" id="YV2-fN-dcO"/>
                                 </constraints>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="CD6-1z-I7I"/>
-                                        <exclude reference="Y66-pP-bxk"/>
-                                    </mask>
-                                </variation>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZLk-3S-Zl4">
                                 <rect key="frame" x="0.0" y="0.0" width="254" height="375"/>
@@ -298,8 +248,6 @@
                     <connections>
                         <outlet property="attackButton" destination="D3t-a6-LN5" id="un0-v9-gko"/>
                         <outlet property="cameraTrackpadView" destination="w4F-xx-Ctd" id="8lX-TZ-r2r"/>
-                        <outlet property="crouchButton" destination="O1P-jN-6Pl" id="65b-P3-5jV"/>
-                        <outlet property="interactButton" destination="0G2-Yg-5Ut" id="jQo-db-QD7"/>
                         <outlet property="movementTrackpadView" destination="ZLk-3S-Zl4" id="VSf-rN-TO2"/>
                     </connections>
                 </viewController>
