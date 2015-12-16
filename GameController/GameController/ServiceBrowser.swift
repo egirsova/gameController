@@ -14,11 +14,6 @@ class ServiceBrowser : NSObject {
     private let serviceBrowser : MCNearbyServiceBrowser
     
     private let gameServiceType = "elg-escape-game"
-    let kFoundPeer = "elg-foundPeer"
-    let kSendInvite = "elg-sendInvite"
-    let updateConnectionNotificationKey = "elg_connectionUpdate"
-    let sendKeystrokesNotificationKey = "elg_sendKeystrokes"
-    let kPeerIDKey = "elg-peerid"
     
     private let peerId: MCPeerID
     private var connectedPeerId: MCPeerID?
@@ -30,14 +25,14 @@ class ServiceBrowser : NSObject {
     override init() {
         
         defaults = NSUserDefaults.standardUserDefaults()
-        if let peerIDData = defaults.dataForKey(kPeerIDKey) {
+        if let peerIDData = defaults.dataForKey(Constants.UserDefaults.peerIDKey) {
             peerId = NSKeyedUnarchiver.unarchiveObjectWithData(peerIDData) as! MCPeerID
             print("peerID already exists: \(peerId)")
         } else {
             print("peerID does not yet exist. Create a new one.")
             peerId = MCPeerID(displayName: UIDevice.currentDevice().name)
             let peerIDData = NSKeyedArchiver.archivedDataWithRootObject(peerId)
-            defaults.setObject(peerIDData, forKey: kPeerIDKey)
+            defaults.setObject(peerIDData, forKey: Constants.UserDefaults.peerIDKey)
             defaults.synchronize()
         }
         
@@ -90,9 +85,9 @@ extension ServiceBrowser : MCNearbyServiceBrowserDelegate {
         
         self.foundPeerIds?.append(peerID)
         
-        NSNotificationCenter.defaultCenter().postNotificationName(kFoundPeer, object: self, userInfo: nil)
+        NSNotificationCenter.defaultCenter().postNotificationName(Constants.Notifications.foundPeer, object: self, userInfo: nil)
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "sendInvite:", name: kSendInvite, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "sendInvite:", name: Constants.Notifications.sendInvite, object: nil)
     }
     
     func browser(browser: MCNearbyServiceBrowser, lostPeer peerID: MCPeerID) {
@@ -115,12 +110,12 @@ extension ServiceBrowser : MCSessionDelegate {
     func session(session: MCSession, peer peerID: MCPeerID, didChangeState state: MCSessionState) {
         print("peer \(peerID) didChangeState: \(state.stringValue())")
         
-        NSNotificationCenter.defaultCenter().postNotificationName(updateConnectionNotificationKey, object: self, userInfo: ["sessionStatus": state.stringValue()])
+        NSNotificationCenter.defaultCenter().postNotificationName(Constants.Notifications.updateConnection, object: self, userInfo: ["sessionStatus": state.stringValue()])
         
         if state == MCSessionState.Connected {
             // We are now able to send data to the game app
             connectedPeerId = peerID
-            NSNotificationCenter.defaultCenter().addObserver(self, selector: "sendKeystrokes:", name: sendKeystrokesNotificationKey, object: nil)
+            NSNotificationCenter.defaultCenter().addObserver(self, selector: "sendKeystrokes:", name: Constants.Notifications.sendKeystrokes, object: nil)
         }
         
         if state == MCSessionState.NotConnected {

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6E0933B11C21687F0085735C /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E0933B01C21687F0085735C /* Constants.swift */; };
 		9E230ED41BB07C260046CC4E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E230ED31BB07C260046CC4E /* AppDelegate.swift */; };
 		9E230ED61BB07C260046CC4E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E230ED51BB07C260046CC4E /* ViewController.swift */; };
 		9E230ED91BB07C260046CC4E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9E230ED71BB07C260046CC4E /* Main.storyboard */; };
@@ -36,6 +37,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6E0933B01C21687F0085735C /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		9E230ED01BB07C260046CC4E /* GameController.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GameController.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E230ED31BB07C260046CC4E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9E230ED51BB07C260046CC4E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -103,6 +105,7 @@
 			children = (
 				9E230ED31BB07C260046CC4E /* AppDelegate.swift */,
 				9E230F3E1BB084080046CC4E /* ServiceBrowser.swift */,
+				6E0933B01C21687F0085735C /* Constants.swift */,
 				9E230ED51BB07C260046CC4E /* ViewController.swift */,
 				9E8D12EA1BB1C2270016AC74 /* ControlsViewController.swift */,
 				9E230ED71BB07C260046CC4E /* Main.storyboard */,
@@ -198,7 +201,7 @@
 				TargetAttributes = {
 					9E230ECF1BB07C260046CC4E = {
 						CreatedOnToolsVersion = 7.0;
-						DevelopmentTeam = 4UHJCFWZ8Y;
+						DevelopmentTeam = JV27EC9686;
 					};
 					9E230EE31BB07C260046CC4E = {
 						CreatedOnToolsVersion = 7.0;
@@ -264,6 +267,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6E0933B11C21687F0085735C /* Constants.swift in Sources */,
 				9E230ED61BB07C260046CC4E /* ViewController.swift in Sources */,
 				9E230ED41BB07C260046CC4E /* AppDelegate.swift in Sources */,
 				9E8D12EB1BB1C2270016AC74 /* ControlsViewController.swift in Sources */,
@@ -417,7 +421,7 @@
 				INFOPLIST_FILE = GameController/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.girsova.GameController;
+				PRODUCT_BUNDLE_IDENTIFIER = com.elizavetagirsova.GameController;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -432,7 +436,7 @@
 				INFOPLIST_FILE = GameController/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.girsova.GameController;
+				PRODUCT_BUNDLE_IDENTIFIER = com.elizavetagirsova.GameController;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
