@@ -1,4 +1,6 @@
-# Island Escape - gameController
+# Island Escape - Controller Application
 
-3D multiplayer game developed for Mac OS X that uses iOS devices as controllers.
-This is the game controller application for iOS.
+## Introductory Information
+This is the iOS controller/virtual joystick app for the Mac OS X first-person local multiplayer shooter game. The repository for the actual game application is located [here](https://github.com/egirsova/gameApp "Game Application Repository").
+
+
