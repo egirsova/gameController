@@ -99,7 +99,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         if(sessionStatus == "Connected") {
             dispatch_async(dispatch_get_main_queue(), {
                 self.statusTF.text = "Connected!"
-                print("statusTF Text: \(self.statusTF.text)")
                 self.spinner.stopAnimating()
                 self.spinner.hidden = true
                 

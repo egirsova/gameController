@@ -17,8 +17,8 @@ class ServiceBrowser : NSObject {
     
     private let peerId: MCPeerID
     private var connectedPeerId: MCPeerID?
+    private var connectingTo: MCPeerID?
     
-    private var currentBrowser: MCNearbyServiceBrowser?
     var foundPeerIds: Array<MCPeerID>?
     private var defaults: NSUserDefaults
     
@@ -27,9 +27,7 @@ class ServiceBrowser : NSObject {
         defaults = NSUserDefaults.standardUserDefaults()
         if let peerIDData = defaults.dataForKey(Constants.UserDefaults.peerIDKey) {
             peerId = NSKeyedUnarchiver.unarchiveObjectWithData(peerIDData) as! MCPeerID
-            print("peerID already exists: \(peerId)")
         } else {
-            print("peerID does not yet exist. Create a new one.")
             peerId = MCPeerID(displayName: UIDevice.currentDevice().name)
             let peerIDData = NSKeyedArchiver.archivedDataWithRootObject(peerId)
             defaults.setObject(peerIDData, forKey: Constants.UserDefaults.peerIDKey)
@@ -53,12 +51,11 @@ class ServiceBrowser : NSObject {
         let session = MCSession(peer: self.peerId, securityIdentity: nil, encryptionPreference: MCEncryptionPreference.Required)
         session.delegate = self
         return session
-        }()
+    }()
     
     func sendInvite(notification: NSNotification) {
         let userInfo:Dictionary<String,String!> = notification.userInfo as! Dictionary<String,String!>
         let peerIdInvite = userInfo["peerId"]
-        print("Sending invite to peer: \(peerIdInvite)")
         
         var mcPeerIdInvite: MCPeerID?
         
@@ -67,8 +64,8 @@ class ServiceBrowser : NSObject {
                 mcPeerIdInvite = id
             }
         }
-        
-        currentBrowser!.invitePeer(mcPeerIdInvite!, toSession: self.session, withContext: nil, timeout: 15)
+        connectingTo = mcPeerIdInvite
+        serviceBrowser.invitePeer(mcPeerIdInvite!, toSession: self.session, withContext: nil, timeout: 15)
     }
 }
 
@@ -80,14 +77,12 @@ extension ServiceBrowser : MCNearbyServiceBrowserDelegate {
     
     func browser(browser: MCNearbyServiceBrowser, foundPeer peerID: MCPeerID, withDiscoveryInfo info: [String : String]?) {
         print("foundPeer: \(peerID)")
-        // Invite any peer discovered
-        currentBrowser = browser
-        
         self.foundPeerIds?.append(peerID)
         
         NSNotificationCenter.defaultCenter().postNotificationName(Constants.Notifications.foundPeer, object: self, userInfo: nil)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "sendInvite:", name: Constants.Notifications.sendInvite, object: nil)
+        
     }
     
     func browser(browser: MCNearbyServiceBrowser, lostPeer peerID: MCPeerID) {
@@ -114,8 +109,12 @@ extension ServiceBrowser : MCSessionDelegate {
         
         if state == MCSessionState.Connected {
             // We are now able to send data to the game app
-            connectedPeerId = peerID
-            NSNotificationCenter.defaultCenter().addObserver(self, selector: "sendKeystrokes:", name: Constants.Notifications.sendKeystrokes, object: nil)
+            if let attemptingToConnectTo = connectingTo {
+                if attemptingToConnectTo == peerID {
+                    connectedPeerId = peerID
+                    NSNotificationCenter.defaultCenter().addObserver(self, selector: "sendKeystrokes:", name: Constants.Notifications.sendKeystrokes, object: nil)
+                }
+            }
         }
         
         if state == MCSessionState.NotConnected {
