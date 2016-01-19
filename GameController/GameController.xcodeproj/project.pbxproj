@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		6E0933B11C21687F0085735C /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E0933B01C21687F0085735C /* Constants.swift */; };
+		6EA02A241C4C15B000D9EAC7 /* ReadyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EA02A231C4C15B000D9EAC7 /* ReadyViewController.swift */; };
 		9E230ED41BB07C260046CC4E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E230ED31BB07C260046CC4E /* AppDelegate.swift */; };
 		9E230ED61BB07C260046CC4E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E230ED51BB07C260046CC4E /* ViewController.swift */; };
 		9E230ED91BB07C260046CC4E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9E230ED71BB07C260046CC4E /* Main.storyboard */; };
@@ -38,6 +39,7 @@
 
 /* Begin PBXFileReference section */
 		6E0933B01C21687F0085735C /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		6EA02A231C4C15B000D9EAC7 /* ReadyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReadyViewController.swift; sourceTree = "<group>"; };
 		9E230ED01BB07C260046CC4E /* GameController.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GameController.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E230ED31BB07C260046CC4E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9E230ED51BB07C260046CC4E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -109,6 +111,7 @@
 				9E230ED51BB07C260046CC4E /* ViewController.swift */,
 				9E8D12EA1BB1C2270016AC74 /* ControlsViewController.swift */,
 				9E230ED71BB07C260046CC4E /* Main.storyboard */,
+				6EA02A231C4C15B000D9EAC7 /* ReadyViewController.swift */,
 				9E230EDA1BB07C260046CC4E /* Assets.xcassets */,
 				9E230EDC1BB07C260046CC4E /* LaunchScreen.storyboard */,
 				9E230EDF1BB07C260046CC4E /* Info.plist */,
@@ -271,6 +274,7 @@
 				9E230ED61BB07C260046CC4E /* ViewController.swift in Sources */,
 				9E230ED41BB07C260046CC4E /* AppDelegate.swift in Sources */,
 				9E8D12EB1BB1C2270016AC74 /* ControlsViewController.swift in Sources */,
+				6EA02A241C4C15B000D9EAC7 /* ReadyViewController.swift in Sources */,
 				9E230F3F1BB084080046CC4E /* ServiceBrowser.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -25,6 +25,7 @@ struct Keystroke {
         case Crouch
         case Attack
         case Interact
+        case Reload
     }
     
     var interactionType: InteractionType?
@@ -51,10 +52,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     @IBOutlet var titleTF: UILabel!
     @IBOutlet var spinner: UIActivityIndicatorView!
     
-    let kFoundPeer = "elg-foundPeer"
-    let updateConnectionNotificationKey = "elg_connectionUpdate"
-    let kSendInvite = "elg-sendInvite"
-    
     let serviceBrowser = ServiceBrowser()
     
     override func viewDidLoad() {
@@ -66,8 +63,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         peerTable.dataSource = self
         peerTable.delegate = self
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updatePeerList:", name: kFoundPeer, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateConnectionDetails:", name: updateConnectionNotificationKey, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updatePeerList:", name: Constants.Notifications.foundPeer, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateConnectionDetails:", name: Constants.Notifications.updateConnection, object: nil)
         
     }
 
@@ -102,9 +99,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                 self.spinner.stopAnimating()
                 self.spinner.hidden = true
                 
-            // Switch to controller view
-            let vc = self.storyboard?.instantiateViewControllerWithIdentifier("controls")
-                self.showViewController(vc! as UIViewController, sender: vc)
+            // Switch to ready view
+            let vc = self.storyboard?.instantiateViewControllerWithIdentifier("ready")
+            self.showViewController(vc! as UIViewController, sender: vc)
             })
         } else if sessionStatus == "Not Connected" {
             dispatch_async(dispatch_get_main_queue(), {
@@ -142,7 +139,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         let cell = self.peerTable.cellForRowAtIndexPath(indexPath)
         cell?.accessoryType = UITableViewCellAccessoryType.Checkmark
         
-        NSNotificationCenter.defaultCenter().postNotificationName(kSendInvite, object: self, userInfo: ["peerId": cell!.textLabel!.text!])
+        NSNotificationCenter.defaultCenter().postNotificationName(Constants.Notifications.sendInvite, object: self, userInfo: ["peerId": cell!.textLabel!.text!])
         
         statusTF.text = "Connecting to Peer..."
         statusTF.hidden = false

@@ -9,6 +9,10 @@
 import Foundation
 import MultipeerConnectivity
 
+struct StreamData {
+    static var stream: NSData?
+}
+
 class ServiceBrowser : NSObject {
     
     private let serviceBrowser : MCNearbyServiceBrowser
@@ -21,6 +25,8 @@ class ServiceBrowser : NSObject {
     
     var foundPeerIds: Array<MCPeerID>?
     private var defaults: NSUserDefaults
+    private var outputStream: NSOutputStream?
+    var byteIndex = 0
     
     override init() {
         
@@ -112,6 +118,15 @@ extension ServiceBrowser : MCSessionDelegate {
             if let attemptingToConnectTo = connectingTo {
                 if attemptingToConnectTo == peerID {
                     connectedPeerId = peerID
+//                    do {
+//                        try outputStream = session.startStreamWithName("keystrokeStream", toPeer: connectedPeerId!)
+//                        outputStream?.delegate = self
+//                        outputStream?.scheduleInRunLoop(NSRunLoop.mainRunLoop(), forMode: NSDefaultRunLoopMode)
+//                        outputStream?.open()
+//                    } catch {
+//                        print("could not start stream")
+//                    }
+                    NSNotificationCenter.defaultCenter().addObserver(self, selector: "sendReadySignal", name: Constants.Notifications.sendReadySignal, object: nil)
                     NSNotificationCenter.defaultCenter().addObserver(self, selector: "sendKeystrokes:", name: Constants.Notifications.sendKeystrokes, object: nil)
                 }
             }
@@ -144,6 +159,16 @@ extension ServiceBrowser : MCSessionDelegate {
         certificateHandler(true)
     }
     
+    func sendReadySignal() {
+        do {
+            let readySignal = "Ready"
+            let readySignalData = NSKeyedArchiver.archivedDataWithRootObject(readySignal)
+            try session.sendData(readySignalData, toPeers: [self.connectedPeerId!], withMode: MCSessionSendDataMode.Reliable)
+        } catch {
+            print("Error: Could not send data")
+        }
+    }
+    
     func sendKeystrokes(notification: NSNotification) {
         
         let userInfo:Dictionary<String, NSData!> = notification.userInfo as! Dictionary<String, NSData!>
@@ -156,6 +181,26 @@ extension ServiceBrowser : MCSessionDelegate {
             try session.sendData(strokeInfoData, toPeers: [self.connectedPeerId!], withMode: MCSessionSendDataMode.Reliable)
         } catch {
             print("Error: Could not send data")
+        }
+//        if let data = StreamData.stream {
+//            if outputStream!.hasSpaceAvailable {
+//            outputStream?.write(UnsafePointer<UInt8>(data.bytes), maxLength: data.length)
+//            }
+//        }
+    }
+}
+
+extension ServiceBrowser : NSStreamDelegate
+{
+    func stream(aStream: NSStream, handleEvent eventCode: NSStreamEvent) {
+        switch eventCode {
+            case NSStreamEvent.HasSpaceAvailable:
+                if let data = StreamData.stream {
+                    print("trying to send data")
+             outputStream?.write(UnsafePointer<UInt8>(data.bytes), maxLength: data.length)
+                    
+            }
+        default: break
         }
     }
 }

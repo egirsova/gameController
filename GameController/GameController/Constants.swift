@@ -14,6 +14,7 @@ struct Constants {
         static let sendInvite = "elg-sendInvite"
         static let updateConnection = "elg_connectionUpdate"
         static let sendKeystrokes = "elg_sendKeystrokes"
+        static let sendReadySignal = "elg_readySignal"
     }
     
     struct UserDefaults {

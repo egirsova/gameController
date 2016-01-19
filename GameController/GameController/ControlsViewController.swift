@@ -10,9 +10,9 @@ import UIKit
 import QuartzCore
 
 class ControlsViewController: UIViewController {
-
-//    @IBOutlet var crouchButton: UIButton!
-//    @IBOutlet var interactButton: UIButton!
+    
+    //    @IBOutlet var crouchButton: UIButton!
+    //    @IBOutlet var interactButton: UIButton!
     @IBOutlet var attackButton: UIButton!
     @IBOutlet var movementTrackpadView: UIView!
     @IBOutlet var cameraTrackpadView: UIView!
@@ -28,10 +28,10 @@ class ControlsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        crouchButton.layer.borderWidth = 0.5
-//        crouchButton.layer.borderColor = UIColor.whiteColor().CGColor
-//        interactButton.layer.borderWidth = 0.5
-//        interactButton.layer.borderColor = UIColor.whiteColor().CGColor
+        //        crouchButton.layer.borderWidth = 0.5
+        //        crouchButton.layer.borderColor = UIColor.whiteColor().CGColor
+        //        interactButton.layer.borderWidth = 0.5
+        //        interactButton.layer.borderColor = UIColor.whiteColor().CGColor
         attackButton.layer.borderWidth = 0.5
         attackButton.layer.borderColor = UIColor.whiteColor().CGColor
         
@@ -51,7 +51,7 @@ class ControlsViewController: UIViewController {
         cameraTrackpadPGR = UIPanGestureRecognizer(target: self, action: "cameraTrackpadRespondToPanGesture:")
         cameraTrackpadView.addGestureRecognizer(cameraTrackpadPGR!)
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -66,7 +66,7 @@ class ControlsViewController: UIViewController {
         strokeInfo.gestureType = Keystroke.GestureType.Tap
         
         let userInfoData: NSData = NSData(bytes: &strokeInfo, length: sizeof(Keystroke))
-        
+        //StreamData.stream = userInfoData
         NSNotificationCenter.defaultCenter().postNotificationName(sendKeystrokesNotificationKey, object: self, userInfo: ["strokeInfo": userInfoData])
     }
     
@@ -98,13 +98,13 @@ class ControlsViewController: UIViewController {
         } else if recognizer.state == UIGestureRecognizerState.Ended {
             // What to do when user has ceased panning
             dispatch_async(dispatch_get_main_queue(), {
-                self.movementTrackpadView.layer.sublayers?.popLast() 
+                self.movementTrackpadView.layer.sublayers?.popLast()
             })
             
         }
         
         let userInfoData: NSData = NSData(bytes: &strokeInfo, length: sizeof(Keystroke))
-        
+        //StreamData.stream = userInfoData
         NSNotificationCenter.defaultCenter().postNotificationName(sendKeystrokesNotificationKey, object: self, userInfo: ["strokeInfo": userInfoData])
     }
     
@@ -116,7 +116,7 @@ class ControlsViewController: UIViewController {
         strokeInfo.gestureType = Keystroke.GestureType.Tap
         
         let userInfoData: NSData = NSData(bytes: &strokeInfo, length: sizeof(Keystroke))
-        
+        //StreamData.stream = userInfoData
         NSNotificationCenter.defaultCenter().postNotificationName(sendKeystrokesNotificationKey, object: self, userInfo: ["strokeInfo": userInfoData])
     }
     
@@ -151,52 +151,62 @@ class ControlsViewController: UIViewController {
             })
         }
         
-            let userInfoData: NSData = NSData(bytes: &strokeInfo, length: sizeof(Keystroke))
+        let userInfoData: NSData = NSData(bytes: &strokeInfo, length: sizeof(Keystroke))
+        //StreamData.stream = userInfoData
         
         NSNotificationCenter.defaultCenter().postNotificationName(sendKeystrokesNotificationKey, object: self, userInfo: ["strokeInfo": userInfoData])
     }
     
     // MARK: - IBAction Button Response Methods
     // Other Controller Button Action Methods
-//    @IBAction func crouchButtonPressed(sender: UIButton) {
-//        print("crouch button pressed!")
-//        
-//        var strokeInfo = Keystroke(interactionType: Keystroke.InteractionType.Button)
-//        strokeInfo.button = Keystroke.Button.Crouch
-//        
-//        let userInfoData: NSData = NSData(bytes: &strokeInfo, length: sizeof(Keystroke))
-//        
-//        NSNotificationCenter.defaultCenter().postNotificationName(sendKeystrokesNotificationKey, object: self, userInfo: ["strokeInfo": userInfoData])
-//    }
-//    
-//    @IBAction func interactButtonPressed(sender: UIButton) {
-//        print("interact button pressed")
-//        
-//        var strokeInfo = Keystroke(interactionType: Keystroke.InteractionType.Button)
-//        strokeInfo.button = Keystroke.Button.Interact
-//        
-//        let userInfoData: NSData = NSData(bytes: &strokeInfo, length: sizeof(Keystroke))
-//        
-//        NSNotificationCenter.defaultCenter().postNotificationName(sendKeystrokesNotificationKey, object: self, userInfo: ["strokeInfo": userInfoData])
-//    }
-//    
+    //    @IBAction func crouchButtonPressed(sender: UIButton) {
+    //        print("crouch button pressed!")
+    //
+    //        var strokeInfo = Keystroke(interactionType: Keystroke.InteractionType.Button)
+    //        strokeInfo.button = Keystroke.Button.Crouch
+    //
+    //        let userInfoData: NSData = NSData(bytes: &strokeInfo, length: sizeof(Keystroke))
+    //
+    //        NSNotificationCenter.defaultCenter().postNotificationName(sendKeystrokesNotificationKey, object: self, userInfo: ["strokeInfo": userInfoData])
+    //    }
+    //
+    //    @IBAction func interactButtonPressed(sender: UIButton) {
+    //        print("interact button pressed")
+    //
+    //        var strokeInfo = Keystroke(interactionType: Keystroke.InteractionType.Button)
+    //        strokeInfo.button = Keystroke.Button.Interact
+    //
+    //        let userInfoData: NSData = NSData(bytes: &strokeInfo, length: sizeof(Keystroke))
+    //
+    //        NSNotificationCenter.defaultCenter().postNotificationName(sendKeystrokesNotificationKey, object: self, userInfo: ["strokeInfo": userInfoData])
+    //    }
+    //
     @IBAction func attackButtonPressed(sender: UIButton) {
         var strokeInfo = Keystroke(interactionType: Keystroke.InteractionType.Button)
         strokeInfo.button = Keystroke.Button.Attack
         
         let userInfoData: NSData = NSData(bytes: &strokeInfo, length: sizeof(Keystroke))
-        
+        //StreamData.stream = userInfoData
         NSNotificationCenter.defaultCenter().postNotificationName(sendKeystrokesNotificationKey, object: self, userInfo: ["strokeInfo": userInfoData])
     }
-
+    
+    @IBAction func reloadButtonPressed(sender: UIButton) {
+        var strokeInfo = Keystroke(interactionType: Keystroke.InteractionType.Button)
+        strokeInfo.button = Keystroke.Button.Reload
+        
+        let userInfoData: NSData = NSData(bytes: &strokeInfo, length: sizeof(Keystroke))
+        //StreamData.stream = userInfoData
+        NSNotificationCenter.defaultCenter().postNotificationName(sendKeystrokesNotificationKey, object: self, userInfo: ["strokeInfo": userInfoData])
+    }
+    
     /*
     // MARK: - Navigation
-
+    
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    // Get the new view controller using segue.destinationViewController.
+    // Pass the selected object to the new view controller.
     }
     */
-
+    
 }
