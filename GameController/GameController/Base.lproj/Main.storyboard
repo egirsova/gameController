@@ -290,5 +290,41 @@
             </objects>
             <point key="canvasLocation" x="168.5" y="1174.5"/>
         </scene>
+        <!--Dead View Controller-->
+        <scene sceneID="G3O-FM-9aG">
+            <objects>
+                <viewController storyboardIdentifier="dead" id="QfC-Ys-7mc" customClass="DeadViewController" customModule="GameController" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="wd2-ts-UGT"/>
+                        <viewControllerLayoutGuide type="bottom" id="Aef-mv-vfP"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="NHG-KQ-Y8J">
+                        <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Dead people can't move" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wHt-Ao-0ql">
+                                <rect key="frame" x="223" y="165" width="221" height="45"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="221" id="biz-nh-QD7"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="0.039215686270000001" green="0.070588235289999995" blue="0.1529411765" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="wHt-Ao-0ql" firstAttribute="top" secondItem="wd2-ts-UGT" secondAttribute="bottom" constant="145" id="jA1-22-d70"/>
+                            <constraint firstItem="wHt-Ao-0ql" firstAttribute="centerX" secondItem="NHG-KQ-Y8J" secondAttribute="centerX" id="slm-Eb-sEM"/>
+                            <constraint firstItem="wHt-Ao-0ql" firstAttribute="centerY" secondItem="NHG-KQ-Y8J" secondAttribute="centerY" id="tnV-33-26E"/>
+                        </constraints>
+                    </view>
+                    <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="SSx-Um-6L7" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="168.5" y="1621.5"/>
+        </scene>
     </scenes>
 </document>

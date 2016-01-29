@@ -118,14 +118,14 @@ extension ServiceBrowser : MCSessionDelegate {
             if let attemptingToConnectTo = connectingTo {
                 if attemptingToConnectTo == peerID {
                     connectedPeerId = peerID
-//                    do {
-//                        try outputStream = session.startStreamWithName("keystrokeStream", toPeer: connectedPeerId!)
-//                        outputStream?.delegate = self
-//                        outputStream?.scheduleInRunLoop(NSRunLoop.mainRunLoop(), forMode: NSDefaultRunLoopMode)
-//                        outputStream?.open()
-//                    } catch {
-//                        print("could not start stream")
-//                    }
+                    //                    do {
+                    //                        try outputStream = session.startStreamWithName("keystrokeStream", toPeer: connectedPeerId!)
+                    //                        outputStream?.delegate = self
+                    //                        outputStream?.scheduleInRunLoop(NSRunLoop.mainRunLoop(), forMode: NSDefaultRunLoopMode)
+                    //                        outputStream?.open()
+                    //                    } catch {
+                    //                        print("could not start stream")
+                    //                    }
                     NSNotificationCenter.defaultCenter().addObserver(self, selector: "sendReadySignal", name: Constants.Notifications.sendReadySignal, object: nil)
                     NSNotificationCenter.defaultCenter().addObserver(self, selector: "sendKeystrokes:", name: Constants.Notifications.sendKeystrokes, object: nil)
                 }
@@ -148,7 +148,15 @@ extension ServiceBrowser : MCSessionDelegate {
     }
     
     func session(session: MCSession, didReceiveData data: NSData, fromPeer peerID: MCPeerID) {
-        print("peer \(peerID) didReceiveData: \(data)")
+        
+        let receivedObject = NSKeyedUnarchiver.unarchiveObjectWithData(data)
+        
+        if let unarchivedData = receivedObject {
+            if unarchivedData.isEqual("playerDead")  {
+                NSNotificationCenter.defaultCenter().postNotificationName(Constants.Notifications.switchToDeadView, object: self, userInfo: nil)
+            }
+        }
+        
     }
     
     func session(session: MCSession, didReceiveStream stream: NSInputStream, withName streamName: String, fromPeer peerID: MCPeerID) {
@@ -182,11 +190,11 @@ extension ServiceBrowser : MCSessionDelegate {
         } catch {
             print("Error: Could not send data")
         }
-//        if let data = StreamData.stream {
-//            if outputStream!.hasSpaceAvailable {
-//            outputStream?.write(UnsafePointer<UInt8>(data.bytes), maxLength: data.length)
-//            }
-//        }
+        //        if let data = StreamData.stream {
+        //            if outputStream!.hasSpaceAvailable {
+        //            outputStream?.write(UnsafePointer<UInt8>(data.bytes), maxLength: data.length)
+        //            }
+        //        }
     }
 }
 
@@ -194,11 +202,11 @@ extension ServiceBrowser : NSStreamDelegate
 {
     func stream(aStream: NSStream, handleEvent eventCode: NSStreamEvent) {
         switch eventCode {
-            case NSStreamEvent.HasSpaceAvailable:
-                if let data = StreamData.stream {
-                    print("trying to send data")
-             outputStream?.write(UnsafePointer<UInt8>(data.bytes), maxLength: data.length)
-                    
+        case NSStreamEvent.HasSpaceAvailable:
+            if let data = StreamData.stream {
+                print("trying to send data")
+                outputStream?.write(UnsafePointer<UInt8>(data.bytes), maxLength: data.length)
+                
             }
         default: break
         }

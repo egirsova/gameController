@@ -15,6 +15,7 @@ struct Constants {
         static let updateConnection = "elg_connectionUpdate"
         static let sendKeystrokes = "elg_sendKeystrokes"
         static let sendReadySignal = "elg_readySignal"
+        static let switchToDeadView = "elg_switchToDeadView"
     }
     
     struct UserDefaults {

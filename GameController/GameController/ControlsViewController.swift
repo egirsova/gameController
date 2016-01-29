@@ -50,11 +50,19 @@ class ControlsViewController: UIViewController {
         
         cameraTrackpadPGR = UIPanGestureRecognizer(target: self, action: "cameraTrackpadRespondToPanGesture:")
         cameraTrackpadView.addGestureRecognizer(cameraTrackpadPGR!)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "switchToDeadView", name: Constants.Notifications.switchToDeadView, object: nil)
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func switchToDeadView()
+    {
+        let vc = self.storyboard?.instantiateViewControllerWithIdentifier("dead")
+        self.showViewController(vc! as UIViewController, sender: vc)
     }
     
     // MARK: - Gesture Recognizer Response Methods
