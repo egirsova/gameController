@@ -154,6 +154,8 @@ extension ServiceBrowser : MCSessionDelegate {
         if let unarchivedData = receivedObject {
             if unarchivedData.isEqual("playerDead")  {
                 NSNotificationCenter.defaultCenter().postNotificationName(Constants.Notifications.switchToDeadView, object: self, userInfo: nil)
+            } else if unarchivedData.isEqual("playerDamaged") {
+                NSNotificationCenter.defaultCenter().postNotificationName(Constants.Notifications.vibrateDevice, object: self, userInfo: nil)
             }
         }
         

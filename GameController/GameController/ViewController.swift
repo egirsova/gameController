@@ -12,6 +12,7 @@ struct Keystroke {
     enum InteractionType {
         case Button
         case Trackpad
+        case Shake
     }
     enum TrackpadType {
         case Movement

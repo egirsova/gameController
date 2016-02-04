@@ -8,11 +8,10 @@
 
 import UIKit
 import QuartzCore
+import AudioToolbox
 
 class ControlsViewController: UIViewController {
     
-    //    @IBOutlet var crouchButton: UIButton!
-    //    @IBOutlet var interactButton: UIButton!
     @IBOutlet var attackButton: UIButton!
     @IBOutlet var movementTrackpadView: UIView!
     @IBOutlet var cameraTrackpadView: UIView!
@@ -28,10 +27,6 @@ class ControlsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //        crouchButton.layer.borderWidth = 0.5
-        //        crouchButton.layer.borderColor = UIColor.whiteColor().CGColor
-        //        interactButton.layer.borderWidth = 0.5
-        //        interactButton.layer.borderColor = UIColor.whiteColor().CGColor
         attackButton.layer.borderWidth = 0.5
         attackButton.layer.borderColor = UIColor.whiteColor().CGColor
         
@@ -52,6 +47,8 @@ class ControlsViewController: UIViewController {
         cameraTrackpadView.addGestureRecognizer(cameraTrackpadPGR!)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "switchToDeadView", name: Constants.Notifications.switchToDeadView, object: nil)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "vibrateDevice", name: Constants.Notifications.vibrateDevice, object: nil)
     }
     
     override func didReceiveMemoryWarning() {
@@ -63,6 +60,14 @@ class ControlsViewController: UIViewController {
     {
         let vc = self.storyboard?.instantiateViewControllerWithIdentifier("dead")
         self.showViewController(vc! as UIViewController, sender: vc)
+    }
+    
+    func vibrateDevice() {
+        AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
+    }
+    
+    override func canBecomeFirstResponder() -> Bool {
+        return true
     }
     
     // MARK: - Gesture Recognizer Response Methods
@@ -166,29 +171,6 @@ class ControlsViewController: UIViewController {
     }
     
     // MARK: - IBAction Button Response Methods
-    // Other Controller Button Action Methods
-    //    @IBAction func crouchButtonPressed(sender: UIButton) {
-    //        print("crouch button pressed!")
-    //
-    //        var strokeInfo = Keystroke(interactionType: Keystroke.InteractionType.Button)
-    //        strokeInfo.button = Keystroke.Button.Crouch
-    //
-    //        let userInfoData: NSData = NSData(bytes: &strokeInfo, length: sizeof(Keystroke))
-    //
-    //        NSNotificationCenter.defaultCenter().postNotificationName(sendKeystrokesNotificationKey, object: self, userInfo: ["strokeInfo": userInfoData])
-    //    }
-    //
-    //    @IBAction func interactButtonPressed(sender: UIButton) {
-    //        print("interact button pressed")
-    //
-    //        var strokeInfo = Keystroke(interactionType: Keystroke.InteractionType.Button)
-    //        strokeInfo.button = Keystroke.Button.Interact
-    //
-    //        let userInfoData: NSData = NSData(bytes: &strokeInfo, length: sizeof(Keystroke))
-    //
-    //        NSNotificationCenter.defaultCenter().postNotificationName(sendKeystrokesNotificationKey, object: self, userInfo: ["strokeInfo": userInfoData])
-    //    }
-    //
     @IBAction func attackButtonPressed(sender: UIButton) {
         var strokeInfo = Keystroke(interactionType: Keystroke.InteractionType.Button)
         strokeInfo.button = Keystroke.Button.Attack
@@ -205,6 +187,15 @@ class ControlsViewController: UIViewController {
         let userInfoData: NSData = NSData(bytes: &strokeInfo, length: sizeof(Keystroke))
         //StreamData.stream = userInfoData
         NSNotificationCenter.defaultCenter().postNotificationName(sendKeystrokesNotificationKey, object: self, userInfo: ["strokeInfo": userInfoData])
+    }
+    
+    override func motionEnded(motion: UIEventSubtype, withEvent event: UIEvent?) {
+        if motion == .MotionShake {
+            var strokeInfo = Keystroke(interactionType: Keystroke.InteractionType.Shake)
+            
+            let userInfoData: NSData = NSData(bytes: &strokeInfo, length: sizeof(Keystroke))
+            NSNotificationCenter.defaultCenter().postNotificationName(sendKeystrokesNotificationKey, object: self, userInfo: ["strokeInfo": userInfoData])
+        }
     }
     
     /*
